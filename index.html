@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TaskFlow - Todo App</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TaskFlow</title>
 
   <style>
     * {
@@ -15,116 +15,294 @@
 
     body {
       min-height: 100vh;
-      background: linear-gradient(135deg, #0f172a, #1e293b);
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      background: linear-gradient(135deg, #0f172a, #1e293b, #020617);
       color: white;
+      padding: 20px;
     }
 
     .container {
-      width: 90%;
-      max-width: 420px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .login-box, .app-box {
       background: #1e293b;
       padding: 30px;
-      border-radius: 20px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+      border-radius: 22px;
+      box-shadow: 0 20px 45px rgba(0,0,0,0.4);
+    }
+
+    .login-box {
+      max-width: 430px;
+      margin: 100px auto;
       text-align: center;
     }
 
     h1 {
+      font-size: 40px;
       color: #38bdf8;
-      margin-bottom: 10px;
-      font-size: 38px;
+      margin-bottom: 8px;
     }
 
     p {
       color: #cbd5e1;
-      margin-bottom: 25px;
+      margin-bottom: 20px;
     }
 
-    input {
+    input, select {
       width: 100%;
       padding: 13px;
-      border-radius: 10px;
       border: none;
       outline: none;
-      margin-bottom: 15px;
-      font-size: 16px;
+      border-radius: 10px;
+      margin-bottom: 12px;
+      font-size: 15px;
     }
 
     button {
-      width: 100%;
-      padding: 13px;
+      padding: 12px 16px;
       border: none;
       border-radius: 10px;
       background: #3b82f6;
       color: white;
-      font-size: 16px;
+      font-size: 15px;
       cursor: pointer;
-      margin-bottom: 10px;
     }
 
     button:hover {
       background: #2563eb;
     }
 
-    .app {
+    .app-box {
       display: none;
     }
 
-    ul {
-      list-style: none;
-      margin-top: 15px;
-      text-align: left;
-    }
-
-    li {
-      background: #334155;
-      margin-bottom: 10px;
-      padding: 12px;
-      border-radius: 10px;
+    .top {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-bottom: 25px;
+    }
+
+    .stats {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .card {
+      background: #334155;
+      padding: 15px;
+      border-radius: 15px;
+      flex: 1;
+      min-width: 140px;
+      text-align: center;
+    }
+
+    .card h2 {
+      color: #38bdf8;
+    }
+
+    .form {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr auto;
+      gap: 10px;
+      margin-bottom: 25px;
+    }
+
+    .main {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 20px;
+    }
+
+    .section {
+      background: #0f172a;
+      padding: 20px;
+      border-radius: 18px;
+    }
+
+    .section h2 {
+      margin-bottom: 15px;
+      color: #e0f2fe;
+    }
+
+    .task {
+      background: #1e293b;
+      padding: 14px;
+      border-radius: 12px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .task-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .circle {
+      width: 27px;
+      height: 27px;
+      border-radius: 50%;
+      border: 2px solid #38bdf8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .completed .circle {
+      background: #22c55e;
+      border-color: #22c55e;
+    }
+
+    .completed .task-title {
+      text-decoration: line-through;
+      color: #94a3b8;
+    }
+
+    .task-title {
+      font-weight: bold;
+    }
+
+    .date {
+      font-size: 13px;
+      color: #cbd5e1;
+    }
+
+    .priority {
+      font-size: 12px;
+      padding: 4px 8px;
+      border-radius: 20px;
+      background: #475569;
+      display: inline-block;
+      margin-top: 5px;
     }
 
     .delete {
       background: #ef4444;
-      width: auto;
-      padding: 6px 10px;
-      margin: 0;
+      padding: 8px 10px;
       font-size: 13px;
     }
 
-    .done {
-      text-decoration: line-through;
-      color: #94a3b8;
+    .calendar-day {
+      background: #1e293b;
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 10px;
+    }
+
+    .calendar-date {
+      color: #38bdf8;
+      font-weight: bold;
+      margin-bottom: 7px;
+    }
+
+    .calendar-task {
+      font-size: 14px;
+      padding: 6px;
+      border-radius: 8px;
+      background: #334155;
+      margin-top: 5px;
+    }
+
+    .tick {
+      color: #22c55e;
+      font-weight: bold;
+    }
+
+    @media (max-width: 800px) {
+      .form, .main {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 
 <body>
 
-  <div class="container login" id="loginBox">
-    <h1>TaskFlow</h1>
-    <p>Organize your day, track your progress</p>
+  <div class="container">
 
-    <input type="text" id="nameInput" placeholder="Enter your name">
-    <button onclick="startApp()">Get Started</button>
-  </div>
+    <div class="login-box" id="loginBox">
+      <h1>TaskFlow</h1>
+      <p>Organize your day, track your progress</p>
+      <input type="text" id="nameInput" placeholder="Enter your name">
+      <button onclick="startApp()">Get Started</button>
+    </div>
 
-  <div class="container app" id="appBox">
-    <h1>TaskFlow</h1>
-    <p id="welcomeText"></p>
+    <div class="app-box" id="appBox">
+      <div class="top">
+        <div>
+          <h1>TaskFlow</h1>
+          <p id="welcomeText"></p>
+        </div>
+        <button onclick="logout()">Change User</button>
+      </div>
 
-    <input type="text" id="taskInput" placeholder="Enter a task">
-    <button onclick="addTask()">Add Task</button>
+      <div class="stats">
+        <div class="card">
+          <h2 id="totalCount">0</h2>
+          <p>Total Tasks</p>
+        </div>
+        <div class="card">
+          <h2 id="completedCount">0</h2>
+          <p>Completed</p>
+        </div>
+        <div class="card">
+          <h2 id="pendingCount">0</h2>
+          <p>Pending</p>
+        </div>
+      </div>
 
-    <ul id="taskList"></ul>
+      <div class="form">
+        <input type="text" id="taskInput" placeholder="Enter your task">
+        <input type="date" id="dateInput">
+        <select id="priorityInput">
+          <option value="Low">Low</option>
+          <option value="Medium">Medium</option>
+          <option value="High">High</option>
+        </select>
+        <button onclick="addTask()">Add Task</button>
+      </div>
+
+      <div class="main">
+        <div class="section">
+          <h2>My Tasks</h2>
+          <div id="taskList"></div>
+        </div>
+
+        <div class="section">
+          <h2>Calendar View</h2>
+          <div id="calendarView"></div>
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <script>
+    let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    let username = localStorage.getItem("username") || "";
+
+    window.onload = function () {
+      document.getElementById("dateInput").valueAsDate = new Date();
+
+      if (username !== "") {
+        document.getElementById("loginBox").style.display = "none";
+        document.getElementById("appBox").style.display = "block";
+        document.getElementById("welcomeText").innerText = "Welcome, " + username + "!";
+        showTasks();
+      }
+    };
+
     function startApp() {
       let name = document.getElementById("nameInput").value;
 
@@ -133,40 +311,121 @@
         return;
       }
 
+      localStorage.setItem("username", name);
+      username = name;
+
       document.getElementById("loginBox").style.display = "none";
       document.getElementById("appBox").style.display = "block";
       document.getElementById("welcomeText").innerText = "Welcome, " + name + "!";
+      showTasks();
     }
 
     function addTask() {
-      let taskInput = document.getElementById("taskInput");
-      let taskText = taskInput.value;
+      let taskText = document.getElementById("taskInput").value;
+      let taskDate = document.getElementById("dateInput").value;
+      let taskPriority = document.getElementById("priorityInput").value;
 
       if (taskText.trim() === "") {
         alert("Please enter a task");
         return;
       }
 
-      let li = document.createElement("li");
+      if (taskDate === "") {
+        alert("Please select a date");
+        return;
+      }
 
-      let span = document.createElement("span");
-      span.innerText = taskText;
-      span.onclick = function () {
-        span.classList.toggle("done");
-      };
+      tasks.push({
+        title: taskText,
+        date: taskDate,
+        priority: taskPriority,
+        completed: false
+      });
 
-      let deleteBtn = document.createElement("button");
-      deleteBtn.innerText = "Delete";
-      deleteBtn.className = "delete";
-      deleteBtn.onclick = function () {
-        li.remove();
-      };
+      localStorage.setItem("tasks", JSON.stringify(tasks));
 
-      li.appendChild(span);
-      li.appendChild(deleteBtn);
+      document.getElementById("taskInput").value = "";
+      document.getElementById("dateInput").valueAsDate = new Date();
+      document.getElementById("priorityInput").value = "Low";
 
-      document.getElementById("taskList").appendChild(li);
-      taskInput.value = "";
+      showTasks();
+    }
+
+    function toggleTask(index) {
+      tasks[index].completed = !tasks[index].completed;
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+      showTasks();
+    }
+
+    function deleteTask(index) {
+      tasks.splice(index, 1);
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+      showTasks();
+    }
+
+    function showTasks() {
+      let taskList = document.getElementById("taskList");
+      let calendarView = document.getElementById("calendarView");
+
+      taskList.innerHTML = "";
+      calendarView.innerHTML = "";
+
+      document.getElementById("totalCount").innerText = tasks.length;
+      document.getElementById("completedCount").innerText = tasks.filter(task => task.completed).length;
+      document.getElementById("pendingCount").innerText = tasks.filter(task => !task.completed).length;
+
+      if (tasks.length === 0) {
+        taskList.innerHTML = "<p>No tasks added yet.</p>";
+        calendarView.innerHTML = "<p>No calendar tasks yet.</p>";
+        return;
+      }
+
+      tasks.forEach(function(task, index) {
+        taskList.innerHTML += `
+          <div class="task ${task.completed ? 'completed' : ''}">
+            <div class="task-left">
+              <div class="circle" onclick="toggleTask(${index})">
+                ${task.completed ? '✓' : ''}
+              </div>
+              <div>
+                <div class="task-title">${task.title}</div>
+                <div class="date">${task.date}</div>
+                <div class="priority">${task.priority}</div>
+              </div>
+            </div>
+            <button class="delete" onclick="deleteTask(${index})">Delete</button>
+          </div>
+        `;
+      });
+
+      let dates = [...new Set(tasks.map(task => task.date))].sort();
+
+      dates.forEach(function(date) {
+        let dayTasks = tasks.filter(task => task.date === date);
+
+        let taskHtml = "";
+
+        dayTasks.forEach(function(task) {
+          taskHtml += `
+            <div class="calendar-task">
+              ${task.completed ? '<span class="tick">✓</span>' : '○'}
+              ${task.title}
+            </div>
+          `;
+        });
+
+        calendarView.innerHTML += `
+          <div class="calendar-day">
+            <div class="calendar-date">${date}</div>
+            ${taskHtml}
+          </div>
+        `;
+      });
+    }
+
+    function logout() {
+      localStorage.removeItem("username");
+      location.reload();
     }
   </script>
 
